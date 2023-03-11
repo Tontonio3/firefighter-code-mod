@@ -40,6 +40,7 @@ DIM distanceLeft AS BYTE
 DIM voltageFlame AS BYTE
 DIM roomCounter AS INTEGER
 DIM xVar AS WORD
+
 ' Intitializing roomCounter
 roomCounter = 0
 
@@ -49,193 +50,13 @@ main:
 
 goto main
 
-' Follows the left wall
+' Follow wall?
 sub followWall
-
-  ' Printing values for debugging
-  CLS
-  Locate(0, 1)
-  Print roomCounter
-  Locate(1,1)
-  Print distanceLeft
-  ' Reading sensor values
-  gosub readSensors
-  
-  ' Line Detected
-  if LS = 0 then
-      
-      ' increment Room Counter
-      roomCounter += 1
-      ' Go forwards to not remain on line and further increment counter
-      gosub forwards
-      wait 100 ms
-      ' When the bot leaves room 3
-      if roomCounter = 6 then
-        roomCounter += 1
-        gosub room4
-      end if
-    ' If a flame is detected
-    else if voltageFlame <= 5 then
-
-      gosub outFlame
-    
-
-    '' Conditions to run turning subroutines ''
-
-    else if distanceFront <= 15 then
-
-      gosub turnRightInPlace
-
-    else if distanceLeft >= 20 then
-
-      gosub smoothTurnLeft
-    
-    else if distanceLeft >= 10 then
-
-      gosub farLeft
-  
-    else if distanceLeft <= 8 then
-
-      gosub closeLeft
- 
-    else
-
-      gosub forwards
-
-  end if
 
   return
 
-' Subroutine for room 4
+' Room 4?
 sub room4
-
-  ' Done after leaves room 3, finds wall to line itself up
-  Do Until distanceFront <= 10
-    CLS
-    Locate(0, 1)
-    Print roomCounter
-    Locate(1,1)
-    Print distanceFront
-
-    gosub readSensors
-    gosub smoothTurnLeft
-
-  loop
-
-  ' Stops the bot for consistency
-  gosub stopBot
-  wait 500 ms
-
-  ' Lines itself up to the left wall
-  Do Until distanceFront >= 15
-
-    CLS
-    Locate(0, 1)
-    Print roomCounter
-    Locate(1,1)
-    Print distanceFront
-
-    gosub readSensors
-
-    gosub turnRightInPlace
-
-  loop
-
-  ' Setup to find room 4's wall
-  gosub forwards
-  wait 750 ms
-
-  gosub turnLeftInPlace
-  wait 250 ms
-
-  gosub forwards
-  wait 750 ms
-
-  gosub turnRightInPlace
-  wait 150 ms
-
-  ' Searches for room 4's wall
-  Do Until distanceFront <= 15
-
-    for xVar = 1 To 3
-
-      gosub turnRightInPlace
-
-      CLS
-      Locate(0, 1)
-      Print roomCounter
-      Locate(1,1)
-      Print distanceFront
-
-      gosub readSensors
-      ' If a wall is detected, exit the subroutine
-      if distanceFront <= 15 then
-        goto main
-      end if
-
-      wait 50 ms
-    next
-
-    for xVar = 1 To 5
-
-      gosub forwards
-
-      CLS
-      Locate(0, 1)
-      Print roomCounter
-      Locate(1,1)
-      Print distanceFront
-
-      gosub readSensors
-
-      if distanceFront <= 15 then
-        goto main
-      end if
-
-      wait 50 ms
-    next
-
-
-    for xVar = 1 To 3
-
-      gosub turnLeftInPlace
-
-      CLS
-      Locate(0, 1)
-      Print roomCounter
-      Locate(1,1)
-      Print distanceFront
-
-      gosub readSensors
-
-      if distanceFront <= 15 then
-        goto main
-      end if
-
-      wait 50 ms
-    next
-
-    for xVar = 1 To 5
-
-      gosub forwards
-
-      CLS
-      Locate(0, 1)
-      Print roomCounter
-      Locate(1,1)
-      Print distanceFront
-
-      gosub readSensors
-
-      if distanceFront <= 15 then
-        goto main
-      end if
-
-      wait 50 ms
-
-      next
-
-  loop
 
 return
 
