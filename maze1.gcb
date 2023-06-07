@@ -45,20 +45,7 @@ DIM xVar AS WORD
 roomCounter = 0
 
 main:
-
-  gosub followWall
-
 goto main
-
-' Follow wall?
-sub followWall
-
-  return
-
-' Room 4?
-sub room4
-
-return
 
 ''SUBROUTINES''
 
@@ -72,8 +59,6 @@ sub readSensors
  voltageFlame = ReadAD(AN2)
 
 return
-
-
 
 ' Sets the forward component of both motors to 'high'
 sub forwards
@@ -129,9 +114,9 @@ return
 sub closeLeft
 
   gosub turnRightInPlace
-  wait 1 ms
+  wait (insert time here) ms
   gosub forwards
-  wait 3 ms
+  wait (insert time here) ms
 
 return
   
@@ -139,9 +124,9 @@ return
 sub farLeft
 
   gosub turnLeftInPlace
-  wait 1 ms
+  wait (insert time here) ms
   gosub forwards
-  wait 3 ms
+  wait (insert time here) ms
 
 return
 
@@ -149,12 +134,12 @@ return
 sub smoothTurnLeft
 
   gosub forwards
-  wait 2 ms
+  wait (insert time here) ms
   RMF = 1
   LMF = 0
   RMB = 0
   LMB = 0
-  wait 5 ms
+  wait (insert time here) ms
 
 return
 
@@ -162,12 +147,12 @@ return
 sub smoothTurnRight
 
   gosub forwards
-  wait 2 ms
+  wait (insert time here) ms
   RMF = 0
   LMF = 1
   RMB = 0
   LMB = 0
-  wait 5 ms
+  wait (insert time here) ms
 
 return
 
@@ -177,26 +162,9 @@ sub outFlame
   ' Turns the fan ON and approaches the flame
   FAN = 1
   gosub forwards
-  wait 400 ms
+  wait (insert time here) ms
   gosub stopBot
-  wait 600 ms
-
-  ' The bot spins from right to left in place, in order to catch the flame in a wide area.
-  gosub turnLeftInPlace
-  wait 300 ms
-
-  For xVar = 1 To 3
-
-    gosub turnRightInPlace
-    wait 600 ms
-    gosub turnLeftInPlace
-    wait 600 ms
-  next
-
-  ' The bot returns to its original position before the fan is put out. 
-  gosub turnRightInPlace
-  wait 300 ms
-
+  wait (insert time here) ms
   FAN = 0
 
 return
